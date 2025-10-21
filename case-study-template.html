@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f7;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-panel, .preview-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-panel {
+            height: fit-content;
+        }
+
+        .preview-panel {
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        h1, h2 {
+            color: #1d1d1f;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+        }
+
+        .required {
+            color: #ff3b30;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="url"]:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #0071e3;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .tags-input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            min-height: 50px;
+            background: white;
+        }
+
+        .tag {
+            background: #0071e3;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tag-remove {
+            cursor: pointer;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+
+        .tag-remove:hover {
+            opacity: 1;
+        }
+
+        .tag-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            min-width: 120px;
+            padding: 6px;
+            font-size: 14px;
+        }
+
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .preset-btn {
+            background: #f5f5f7;
+            border: 1px solid #d2d2d7;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-btn:hover {
+            background: #e8e8ed;
+        }
+
+        .preset-btn.active {
+            background: #0071e3;
+            color: white;
+            border-color: #0071e3;
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 1px solid #d2d2d7;
+            margin: 30px 0;
+        }
+
+        .preview-section {
+            margin-bottom: 30px;
+        }
+
+        .preview-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 10px;
+        }
+
+        .preview-section p {
+            color: #86868b;
+            margin-bottom: 8px;
+        }
+
+        .preview-tag {
+            display: inline-block;
+            background: #f5f5f7;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin: 2px;
+            color: #1d1d1f;
+        }
+
+        pre {
+            background: #1d1d1f;
+            color: #f5f5f7;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .copy-btn {
+            background: #0071e3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #0077ed;
+        }
+
+        .copy-btn:active {
+            background: #006edb;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-panel {
+                position: relative;
+                top: 0;
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-panel">
+            <h1>Case Study Template</h1>
+
+            <!-- Project Basics -->
+            <div class="form-group">
+                <label>Project Title <span class="required">*</span></label>
+                <input type="text" id="projectTitle" placeholder="This will be used as the filename">
+            </div>
+
+            <div class="form-group">
+                <label>Project Slug <span class="required">*</span></label>
+                <input type="text" id="projectSlug" placeholder="URL-friendly name (lowercase, hyphens only)">
+            </div>
+
+            <div class="form-group">
+                <label>Tagline</label>
+                <input type="text" id="tagline" placeholder="Brief description of the project">
+            </div>
+
+            <div class="form-group">
+                <label>Skills/Tags (press Enter after each)</label>
+                <div class="tags-input-container" id="skillsTagsContainer">
+                    <input type="text" class="tag-input" id="skillsTagsInput" placeholder="These will link to your homepage skills">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Featured Image URL</label>
+                <input type="url" id="featuredImage" placeholder="https://...">
+            </div>
+
+            <div class="form-group">
+                <label>Project Date</label>
+                <input type="date" id="projectDate">
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- 1. Context -->
+            <h2>1. Context (The Setup)</h2>
+
+            <div class="form-group">
+                <label>Company/Client</label>
+                <input type="text" id="company" placeholder="Company or client name">
+            </div>
+
+            <div class="form-group">
+                <label>Your Role</label>
+                <input type="text" id="role" placeholder="Your position or role">
+            </div>
+
+            <div class="form-group">
+                <label>Team & Duration</label>
+                <textarea id="teamDuration" placeholder="Team size and project duration"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Tech Stack</label>
+                <textarea id="techStack" placeholder="Technologies used"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Platform & Scale</label>
+                <textarea id="platformScale" placeholder="Platform details and scale"></textarea>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- 2. Challenge -->
+            <h2>2. Challenge (The Problem)</h2>
+
+            <div class="form-group">
+                <label>The Problem</label>
+                <textarea id="problem" placeholder="Describe the main problem"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Technical Constraints</label>
+                <textarea id="technicalConstraints" placeholder="Technical limitations or constraints"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Business Impact</label>
+                <textarea id="businessImpact" placeholder="How the problem affected the business"></textarea>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- 3. Approach -->
+            <h2>3. Approach (The Solution)</h2>
+
+            <div class="form-group">
+                <label>Solution Strategy</label>
+                <textarea id="solutionStrategy" placeholder="Your approach to solving the problem"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Architecture Decisions</label>
+                <textarea id="architectureDecisions" placeholder="Key architectural choices"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Why This Approach</label>
+                <textarea id="whyApproach" placeholder="Reasoning behind your decisions"></textarea>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- 4. Implementation -->
+            <h2>4. Implementation (How You Built It)</h2>
+
+            <div class="form-group">
+                <label>Key Technical Decisions</label>
+                <textarea id="technicalDecisions" placeholder="Important technical choices"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Code Examples / Diagrams (URLs)</label>
+                <textarea id="codeExamples" placeholder="URLs to code snippets or diagrams"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Process & Collaboration</label>
+                <textarea id="processCollaboration" placeholder="How the team worked together"></textarea>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- 5. Impact -->
+            <h2>5. Impact (The Result)</h2>
+
+            <div class="form-group">
+                <label>Performance Metrics (Before → After)</label>
+                <textarea id="performanceMetrics" placeholder="Quantifiable performance improvements"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>User Metrics</label>
+                <textarea id="userMetrics" placeholder="User-related improvements"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Business Results</label>
+                <textarea id="businessResults" placeholder="Business outcomes"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Lessons Learned</label>
+                <textarea id="lessonsLearned" placeholder="What you learned from this project"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Screenshots (URLs, comma-separated)</label>
+                <textarea id="screenshots" placeholder="https://image1.png, https://image2.png"></textarea>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- Links -->
+            <h2>Links & Resources</h2>
+
+            <div class="form-group">
+                <label>GitHub Repo</label>
+                <input type="url" id="githubRepo" placeholder="https://github.com/...">
+            </div>
+
+            <div class="form-group">
+                <label>Live Demo</label>
+                <input type="url" id="liveDemo" placeholder="https://...">
+            </div>
+
+            <div class="form-group">
+                <label>Documentation</label>
+                <input type="url" id="documentation" placeholder="https://...">
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- Technical Skills -->
+            <h2>🛠️ Technical Skills</h2>
+            <p style="color: #86868b; margin-bottom: 12px;">Select the main technologies and skills used in this project.</p>
+
+            <div class="form-group">
+                <label>Technical Skills/Tags <span class="required">*</span></label>
+                <div class="tags-input-container" id="technicalSkillsContainer">
+                    <input type="text" class="tag-input" id="technicalSkillsInput" placeholder="Click presets or type your own">
+                </div>
+                <div class="preset-buttons" id="technicalSkillsPresets"></div>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- Hashtags -->
+            <h2>#️⃣ Hashtags</h2>
+            <p style="color: #86868b; margin-bottom: 12px;">Choose relevant hashtags for your case study.</p>
+
+            <div class="form-group">
+                <label>Hashtags <span class="required">*</span></label>
+                <div class="tags-input-container" id="hashtagsContainer">
+                    <input type="text" class="tag-input" id="hashtagsInput" placeholder="Click presets or type your own (don't forget the #)">
+                </div>
+                <div class="preset-buttons" id="hashtagsPresets"></div>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- Soft Skills -->
+            <h2>🤝 Soft Skills</h2>
+            <p style="color: #86868b; margin-bottom: 12px;">What interpersonal or professional skills did you demonstrate?</p>
+
+            <div class="form-group">
+                <label>Soft Skills <span class="required">*</span></label>
+                <div class="tags-input-container" id="softSkillsContainer">
+                    <input type="text" class="tag-input" id="softSkillsInput" placeholder="Click presets or type your own">
+                </div>
+                <div class="preset-buttons" id="softSkillsPresets"></div>
+            </div>
+        </div>
+
+        <div class="preview-panel">
+            <h2>JSON Preview</h2>
+            <pre id="jsonPreview">{
+  "caseStudy": {
+    "title": "",
+    "slug": "",
+    "tagline": "",
+    "skillsTags": [],
+    "featuredImage": "",
+    "date": ""
+  }
+}</pre>
+            <button class="copy-btn" onclick="copyJSON()">Copy JSON</button>
+            <button class="copy-btn" onclick="saveJSON()" style="background: #34c759; margin-left: 10px;">Save JSON</button>
+        </div>
+    </div>
+
+    <script>
+        // Preset data
+        const technicalSkillsPresets = [
+            'Swift', 'SwiftUI', 'UIKit', 'Combine', 'Swift Concurrency', 'MVVM', 'MVC', 'TCA',
+            'Dependency Injection', 'Unit Testing', 'UI Testing', 'Performance', 'Accessibility', 'CI/CD'
+        ];
+
+        const hashtagsPresets = [
+            '#Swift', '#SwiftUI', '#iOSDevelopment', '#DependencyInjection', '#SoftwareArchitecture',
+            '#DesignPatterns', '#CleanArchitecture', '#AppDevelopment', '#SwiftDevelopers', '#MVVM',
+            '#StateManagement', '#ModelViewController', '#AppArchitecture', '#ReactiveProgramming', '#TCA',
+            '#CodeQuality', '#TestingInSwift', '#UITableView', '#UICollectionView', '#UIHostingConfiguration',
+            '#CellReuse', '#AsyncImage', '#Performance', '#StateAndIdentity', '#Diffing', '#ListPerformance',
+            '#iOS16', '#AppleFrameworks', '#CodeTips', '#UIKitAndSwiftUI', '#SoftwareEngineering',
+            '#FactoryPattern', '#NeedleDI', '#TestableCode', '#DIinSwift', '#ScalableApps', '#SwiftLang',
+            '#iOSDev', '#SwiftPerformance', '#TypeInference', '#SwiftCompiler', '#Xcode', '#MobileDevelopment',
+            '#CodeOptimization', '#SwiftTips', '#DeveloperExperience', '#SwiftConcurrency', '#Actors',
+            '#ProtocolExtensions', '#ThreadSafety', '#AsyncAwait', '#Swift6', '#SwiftPackageManager', '#SPM',
+            '#CI', '#DevOps', '#BuildAutomation', '#SwiftCharts', '#LinePlot', '#Xcode16', '#DataVisualization',
+            '#UIUX', '#SwiftTesting', '#TDD', '#SwiftPackages'
+        ];
+
+        const softSkillsPresets = [
+            'Leadership', 'Problem Solving', 'Communication', 'Collaboration', 'Time Management',
+            'Attention to Detail', 'Analytical Thinking', 'Adaptability', 'Mentoring', 'Decision Making'
+        ];
+
+        // Tag management
+        class TagManager {
+            constructor(containerId, inputId, presetsContainerId, presets) {
+                this.container = document.getElementById(containerId);
+                this.input = document.getElementById(inputId);
+                this.presetsContainer = document.getElementById(presetsContainerId);
+                this.presets = presets;
+                this.tags = [];
+                
+                this.setupEventListeners();
+                this.renderPresets();
+            }
+
+            setupEventListeners() {
+                this.input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && this.input.value.trim()) {
+                        e.preventDefault();
+                        this.addTag(this.input.value.trim());
+                        this.input.value = '';
+                    } else if (e.key === 'Backspace' && !this.input.value && this.tags.length > 0) {
+                        this.removeTag(this.tags.length - 1);
+                    }
+                });
+            }
+
+            renderPresets() {
+                if (!this.presetsContainer) return;
+                
+                this.presets.forEach(preset => {
+                    const btn = document.createElement('button');
+                    btn.className = 'preset-btn';
+                    btn.textContent = preset;
+                    btn.onclick = (e) => {
+                        e.preventDefault();
+                        if (this.tags.includes(preset)) {
+                            this.removeTagByValue(preset);
+                            btn.classList.remove('active');
+                        } else {
+                            this.addTag(preset);
+                            btn.classList.add('active');
+                        }
+                    };
+                    this.presetsContainer.appendChild(btn);
+                });
+            }
+
+            addTag(value) {
+                if (!this.tags.includes(value)) {
+                    this.tags.push(value);
+                    this.render();
+                    updatePreview();
+                }
+            }
+
+            removeTag(index) {
+                this.tags.splice(index, 1);
+                this.render();
+                updatePreview();
+            }
+
+            removeTagByValue(value) {
+                const index = this.tags.indexOf(value);
+                if (index > -1) {
+                    this.removeTag(index);
+                }
+            }
+
+            render() {
+                const existingTags = this.container.querySelectorAll('.tag');
+                existingTags.forEach(tag => tag.remove());
+
+                this.tags.forEach((tag, index) => {
+                    const tagEl = document.createElement('span');
+                    tagEl.className = 'tag';
+                    tagEl.innerHTML = `
+                        ${tag}
+                        <span class="tag-remove" onclick="window.removeTag_${this.container.id}(${index})">×</span>
+                    `;
+                    this.container.insertBefore(tagEl, this.input);
+                });
+
+                // Update preset buttons
+                if (this.presetsContainer) {
+                    const buttons = this.presetsContainer.querySelectorAll('.preset-btn');
+                    buttons.forEach(btn => {
+                        if (this.tags.includes(btn.textContent)) {
+                            btn.classList.add('active');
+                        } else {
+                            btn.classList.remove('active');
+                        }
+                    });
+                }
+            }
+        }
+
+        // Initialize tag managers
+        const skillsTagsManager = new TagManager('skillsTagsContainer', 'skillsTagsInput', null, []);
+        const technicalSkillsManager = new TagManager('technicalSkillsContainer', 'technicalSkillsInput', 'technicalSkillsPresets', technicalSkillsPresets);
+        const hashtagsManager = new TagManager('hashtagsContainer', 'hashtagsInput', 'hashtagsPresets', hashtagsPresets);
+        const softSkillsManager = new TagManager('softSkillsContainer', 'softSkillsInput', 'softSkillsPresets', softSkillsPresets);
+
+        // Make remove functions globally accessible
+        window.removeTag_skillsTagsContainer = (i) => skillsTagsManager.removeTag(i);
+        window.removeTag_technicalSkillsContainer = (i) => technicalSkillsManager.removeTag(i);
+        window.removeTag_hashtagsContainer = (i) => hashtagsManager.removeTag(i);
+        window.removeTag_softSkillsContainer = (i) => softSkillsManager.removeTag(i);
+
+        // Update preview
+        function updatePreview() {
+            const data = {
+                caseStudy: {
+                    title: document.getElementById('projectTitle').value,
+                    slug: document.getElementById('projectSlug').value,
+                    tagline: document.getElementById('tagline').value,
+                    skillsTags: skillsTagsManager.tags,
+                    featuredImage: document.getElementById('featuredImage').value,
+                    date: document.getElementById('projectDate').value,
+                    context: {
+                        company: document.getElementById('company').value,
+                        role: document.getElementById('role').value,
+                        teamDuration: document.getElementById('teamDuration').value,
+                        techStack: document.getElementById('techStack').value,
+                        platformScale: document.getElementById('platformScale').value
+                    },
+                    challenge: {
+                        problem: document.getElementById('problem').value,
+                        technicalConstraints: document.getElementById('technicalConstraints').value,
+                        businessImpact: document.getElementById('businessImpact').value
+                    },
+                    approach: {
+                        solutionStrategy: document.getElementById('solutionStrategy').value,
+                        architectureDecisions: document.getElementById('architectureDecisions').value,
+                        whyApproach: document.getElementById('whyApproach').value
+                    },
+                    implementation: {
+                        technicalDecisions: document.getElementById('technicalDecisions').value,
+                        codeExamples: document.getElementById('codeExamples').value,
+                        processCollaboration: document.getElementById('processCollaboration').value
+                    },
+                    impact: {
+                        performanceMetrics: document.getElementById('performanceMetrics').value,
+                        userMetrics: document.getElementById('userMetrics').value,
+                        businessResults: document.getElementById('businessResults').value,
+                        lessonsLearned: document.getElementById('lessonsLearned').value,
+                        screenshots: document.getElementById('screenshots').value.split(',').map(s => s.trim()).filter(s => s)
+                    },
+                    links: {
+                        githubRepo: document.getElementById('githubRepo').value,
+                        liveDemo: document.getElementById('liveDemo').value,
+                        documentation: document.getElementById('documentation').value
+                    },
+                    technicalSkills: technicalSkillsManager.tags,
+                    hashtags: hashtagsManager.tags,
+                    softSkills: softSkillsManager.tags
+                }
+            };
+
+            document.getElementById('jsonPreview').textContent = JSON.stringify(data, null, 2);
+        }
+
+        // Copy JSON
+        function copyJSON() {
+            const json = document.getElementById('jsonPreview').textContent;
+            navigator.clipboard.writeText(json).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Save JSON to file
+        function saveJSON() {
+            const json = document.getElementById('jsonPreview').textContent;
+            const projectTitle = document.getElementById('projectTitle').value || 'case-study';
+            const filename = projectTitle.toLowerCase().replace(/\s+/g, '-') + '.json';
+            
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Saved!';
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }
+
+        // Add input listeners
+        document.querySelectorAll('input, textarea').forEach(el => {
+            el.addEventListener('input', updatePreview);
+        });
+
+        // Add some example data for testing
+        document.getElementById('projectTitle').value = 'Example iOS App Architecture';
+        document.getElementById('projectSlug').value = 'example-ios-app-architecture';
+        document.getElementById('tagline').value = 'Reimagining dependency injection for scalable iOS apps';
+        skillsTagsManager.addTag('Swift');
+        skillsTagsManager.addTag('SwiftUI');
+        technicalSkillsManager.addTag('Swift');
+        technicalSkillsManager.addTag('SwiftUI');
+        hashtagsManager.addTag('#Swift');
+        hashtagsManager.addTag('#SwiftUI');
+        softSkillsManager.addTag('Problem Solving');
+
+        // Initial preview
+        updatePreview();
+    </script>
+</body>
+</html>
