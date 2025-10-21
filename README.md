@@ -51,5 +51,3 @@ Use lowercase with hyphens:
 
 Your case studies will automatically appear on:
 [Your Portfolio URL]
-
-Questions? Contact: [your-email@example.com]
