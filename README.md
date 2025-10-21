@@ -1,4 +1,4 @@
-# Lucas Portfolio - Case Studies
+# Case Studies Template
 
 This repository contains case study data for Lucas's portfolio website.
 
