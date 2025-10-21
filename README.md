@@ -5,7 +5,7 @@ This repository contains case study data for Lucas's portfolio website.
 ## 📝 How to Submit a Case Study
 
 ### Step 1: Fill Out the Template
-Visit the online form: [Case Study Template](https://bravastudio-nl.github.io/LucasPortfolio-CaseStudies/template.html)
+Visit the online form: [Case Study Template](https://bravastudio-nl.github.io/XPortfolio-CaseStudies/case-study-template.html)
 
 ### Step 2: Complete All Sections
 - Project details (title, role, dates)
